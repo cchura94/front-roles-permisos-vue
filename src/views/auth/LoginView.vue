@@ -4,11 +4,14 @@
     <hr>
     <label for="">Ingrese Correo:</label>
     <input type="email" v-model="usuario.email">
+    <span v-if="errores.email">{{ errores.email[0] }}</span>
     <br>
     <label for="">Ingrese Conraseña:</label>
     <input type="password" v-model="usuario.password">
+    <span v-if="errores.password">{{ errores.password[0] }}</span>
     <br>
     <button @click="ingresar()">INGRESAR</button>
+
     
 </template>
 
@@ -22,6 +25,7 @@ export default {
         const router = useRouter()
         
         const usuario = ref({})
+        const errores = ref({})
 
         const ingresar = async () => {
             try {
@@ -33,13 +37,18 @@ export default {
 
                 
             } catch (error) {
-                console.log(error);              
+                console.log("**********", error);
+                if(error.response.status === 422) {
+                    console.log(error.response.data.errors);
+                    errores.value = error.response.data.errors
+                }            
             }
         }
 
         return {
             usuario,
-            ingresar
+            ingresar,
+            errores
         }
     }
 }

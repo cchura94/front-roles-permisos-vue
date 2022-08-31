@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/auth/LoginView.vue'
 import Perfil from '../views/admin/Perfil.vue'
+import NotFound from '../views/errors/NotFound.vue'
+import Usuario from "../views/admin/usuario/Usuario.vue"
 
 const routes = [
   {
@@ -27,7 +29,15 @@ const routes = [
     name: 'Perfil',
     component: Perfil,
     meta: {requireAuth: true}
-  }
+  },
+  {
+    path: '/admin/usuario',
+    name: 'Usuario',
+    component: Usuario,
+    meta: {requireAuth: true}
+  },
+
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ]
 
 const router = createRouter({
