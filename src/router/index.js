@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/auth/LoginView.vue'
 import Perfil from '../views/admin/Perfil.vue'
-import NotFound from '../views/errors/NotFound.vue'
 import Usuario from "../views/admin/usuario/Usuario.vue"
+import NotFound from '../views/errors/NotFound.vue'
+import NoAutorizado from '../views/errors/NoAutorizado.vue'
+
 
 const routes = [
   {
@@ -35,6 +37,11 @@ const routes = [
     name: 'Usuario',
     component: Usuario,
     meta: {requireAuth: true}
+  },
+  {
+    path: '/no-autorizado',
+    name: 'NoAutorizado',
+    component: NoAutorizado
   },
 
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
