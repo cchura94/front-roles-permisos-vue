@@ -5,13 +5,14 @@ import Perfil from '../views/admin/Perfil.vue'
 import Usuario from "../views/admin/usuario/Usuario.vue"
 import NotFound from '../views/errors/NotFound.vue'
 import NoAutorizado from '../views/errors/NoAutorizado.vue'
-
+import App from '../App.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    redirect: '/admin'
+    //component: HomeView
   },
   {
     path: '/about',
@@ -27,17 +28,25 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/admin/perfil',
-    name: 'Perfil',
-    component: Perfil,
-    meta: {requireAuth: true}
+    path: '/admin',
+    component: App,
+    meta: {requireAuth: true},
+    children: [
+      {
+        path: 'perfil',
+        name: 'Perfil',
+        component: Perfil,
+        meta: {requireAuth: true}
+      },
+      {
+        path: 'usuario',
+        name: 'Usuario',
+        component: Usuario,
+        meta: {requireAuth: true}
+      },
+    ]
   },
-  {
-    path: '/admin/usuario',
-    name: 'Usuario',
-    component: Usuario,
-    meta: {requireAuth: true}
-  },
+  
   {
     path: '/no-autorizado',
     name: 'NoAutorizado',
