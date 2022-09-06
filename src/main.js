@@ -205,4 +205,9 @@ app.component('BlockViewer', BlockViewer);
 app.use(store)
 app.use(router)
 
+import { abilitiesPlugin } from '@casl/vue'
+import ability from '@/acl/ability'
+
+app.use(abilitiesPlugin, ability)
+
 app.mount('#app')

@@ -53,12 +53,14 @@
 import * as authService from "@/service/AuthService.js"
 import {ref} from "vue"
 import { useRouter } from 'vue-router'
+import ability from "@/acl/ability"
 
 export default {
     setup(){
         const router = useRouter()
         
         const usuario = ref({})
+        const checked = false
         const errores = ref({})
 
         const ingresar = async () => {
@@ -66,6 +68,19 @@ export default {
                 const {data} = await authService.loginConLaravel(usuario.value)
                 console.log(data);
                 localStorage.setItem("token", data.accessToken);
+
+                data.ability = data.usuario.roles[0].permisos
+                data.ability.push({
+                    action: 'read',
+                    subject: 'Auth'
+                })
+
+                localStorage.setItem('userData', JSON.stringify(data))
+
+                console.log("*******: ", data);
+
+                ability.update(data.ability)
+
                 
                 router.push({name: 'Perfil'})
 
@@ -82,7 +97,8 @@ export default {
         return {
             usuario,
             ingresar,
-            errores
+            errores,
+            checked
         }
     }
 }

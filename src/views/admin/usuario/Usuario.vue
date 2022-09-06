@@ -2,7 +2,7 @@
 
 <div class="card">
 
-    <Button label="Nuevo Usuario" icon="pi pi-external-link" @click="openModal" />
+    <Button label="Nuevo Usuario" icon="pi pi-external-link" @click="openModal" v-if="can('update', 'user')" />
         <Dialog header="Header" v-model:visible="displayModal" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '40vw'}" :modal="true" class="p-fluid">
             
             <div class="field">
@@ -78,9 +78,13 @@
 import UsuarioService from "@/service/UsuarioService"
 import { ref, onMounted } from "vue"
 
+import { useAbility } from "@casl/vue"
+
 export default {
 
     setup(){
+        
+        const { can } = useAbility(); 
 
         const usuarios = ref([])
         const displayModal = ref(false);
@@ -107,7 +111,8 @@ export default {
             openModal,
             closeModal,
             usuario,
-            submitted
+            submitted,
+            can
         }
     }
 

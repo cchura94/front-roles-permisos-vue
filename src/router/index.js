@@ -6,6 +6,7 @@ import Usuario from "../views/admin/usuario/Usuario.vue"
 import NotFound from '../views/errors/NotFound.vue'
 import NoAutorizado from '../views/errors/NoAutorizado.vue'
 import App from '../App.vue'
+import { canNavigate } from '@/acl/routeProtection'
 
 const routes = [
   {
@@ -25,7 +26,11 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: LoginView
+    component: LoginView,
+    meta: {
+      resource: 'Auth',
+      action: 'read'
+    }
   },
   {
     path: '/admin',
@@ -36,13 +41,21 @@ const routes = [
         path: 'perfil',
         name: 'Perfil',
         component: Perfil,
-        meta: {requireAuth: true}
+        meta: {
+          requireAuth: true,
+          action: 'view',
+          resource: 'user'
+        }
       },
       {
         path: 'usuario',
         name: 'Usuario',
         component: Usuario,
-        meta: {requireAuth: true}
+        meta: {
+          requireAuth: true,
+          action: 'viewAny',
+          resource: 'user'
+        }
       },
     ]
   },
@@ -50,7 +63,10 @@ const routes = [
   {
     path: '/no-autorizado',
     name: 'NoAutorizado',
-    component: NoAutorizado
+    component: NoAutorizado,
+    meta: {
+      resource: 'Auth'
+    }
   },
 
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
@@ -62,6 +78,25 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+
+  let token = localStorage.getItem("token");
+  if(!canNavigate(to)){
+    console.log('NO TIENE PERMISOS: ', canNavigate(to))
+    // redireccionar al login 
+    if(!token)
+      return next({name: 'Login'})
+    
+    // si no tiene permisos
+    return  next({name: 'NoAutorizado'})
+  }
+
+  if(token){
+    next()
+  }
+  return next();
+
+
+  /*
   if(to.meta.requireAuth){
     let token = localStorage.getItem("token");
     if(token){
@@ -72,6 +107,8 @@ router.beforeEach((to, from, next) => {
   }else{
     next()
   }
+  */
+
 
 });
 
