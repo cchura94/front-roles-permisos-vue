@@ -53,6 +53,7 @@ export default {
 		},
 		salir(){
 			localStorage.removeItem('token')
+			localStorage.removeItem('userData')
 			this.$router.push('/login')
 		}
     },

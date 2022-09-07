@@ -29,7 +29,8 @@ const routes = [
     component: LoginView,
     meta: {
       resource: 'Auth',
-      action: 'read'
+      action: 'read',
+      redirectIfAuth: true
     }
   },
   {
@@ -90,8 +91,8 @@ router.beforeEach((to, from, next) => {
     return  next({name: 'NoAutorizado'})
   }
 
-  if(token){
-    next()
+  if(to.meta.redirectIfAuth && token){
+    next({name: 'Usuario'});
   }
   return next();
 

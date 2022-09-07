@@ -20,5 +20,9 @@ export default {
 
     eliminarUsuario(id){
         return http().delete(`/v1/usuario/${id}`);
+    },
+
+    asignarRol(obj){
+        return http().post(`/v1/usuario/asignar-rol`, obj);
     }
 }

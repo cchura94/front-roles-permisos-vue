@@ -69,7 +69,11 @@ export default {
                 console.log(data);
                 localStorage.setItem("token", data.accessToken);
 
-                data.ability = data.usuario.roles[0].permisos
+                if(data.usuario.roles.length > 0){
+                    data.ability = data.usuario.roles[0].permisos                    
+                }else{
+                    data.ability = []
+                }
                 data.ability.push({
                     action: 'read',
                     subject: 'Auth'
