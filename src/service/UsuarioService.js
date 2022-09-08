@@ -24,5 +24,9 @@ export default {
 
     asignarRol(obj){
         return http().post(`/v1/usuario/asignar-rol`, obj);
+    },
+
+    quitarRol(obj){
+        return http().post(`/v1/usuario/quitar-rol`, obj);
     }
 }
