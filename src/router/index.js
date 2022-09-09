@@ -7,6 +7,7 @@ import NotFound from '../views/errors/NotFound.vue'
 import NoAutorizado from '../views/errors/NoAutorizado.vue'
 import App from '../App.vue'
 import { canNavigate } from '@/acl/routeProtection'
+import Roles from '@/views/admin/role/Roles.vue'
 
 const routes = [
   {
@@ -58,6 +59,15 @@ const routes = [
           resource: 'user'
         }
       },
+      {
+        path: 'roles',
+        name: 'Roles',
+        component: Roles,
+        meta: {
+          action: 'viewAny',
+          resource: 'role'
+        }
+      }
     ]
   },
   

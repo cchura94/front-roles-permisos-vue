@@ -252,6 +252,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
 import UsuarioService from "@/service/UsuarioService";
+import RoleService from "@/service/RoleService";
 import { ref, onMounted } from "vue";
 
 import { useAbility } from "@casl/vue";
@@ -274,11 +275,8 @@ export default {
 
     onMounted(async () => {
       listarUsuario();
-      roles.value = [
-        { nombre: "Admin" },
-        { nombre: "Gerente" },
-        { nombre: "anonimo" },
-      ];
+      const {data} = await RoleService.getRoles()
+      roles.value = data;
     });
 
     const openModal = () => {

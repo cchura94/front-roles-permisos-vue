@@ -29,6 +29,7 @@
 	</ul>
 </template>
 <script>
+import ability from "@/acl/ability"
 export default {
 	name: 'appsubmenu',
 	props: {
@@ -40,7 +41,8 @@ export default {
 	},
 	data() {
 		return {
-			activeIndex : null
+			activeIndex : null,
+			ability: ability
 		}
 	},
 	methods: {
