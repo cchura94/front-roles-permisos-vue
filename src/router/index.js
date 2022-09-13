@@ -8,6 +8,7 @@ import NoAutorizado from '../views/errors/NoAutorizado.vue'
 import App from '../App.vue'
 import { canNavigate } from '@/acl/routeProtection'
 import Roles from '@/views/admin/role/Roles.vue'
+import Permisos from '@/views/admin/role/Permisos.vue'
 
 const routes = [
   {
@@ -37,7 +38,11 @@ const routes = [
   {
     path: '/admin',
     component: App,
-    meta: {requireAuth: true},
+    meta: {
+      requireAuth: true,
+      action: 'viewAny',
+      resource: 'admin'
+    },
     children: [
       {
         path: 'perfil',
@@ -45,7 +50,7 @@ const routes = [
         component: Perfil,
         meta: {
           requireAuth: true,
-          action: 'view',
+          action: 'viewAny',
           resource: 'user'
         }
       },
@@ -67,6 +72,11 @@ const routes = [
           action: 'viewAny',
           resource: 'role'
         }
+      },
+      {
+        path: 'roles/:id/permisos',
+        name: 'RolPermisos',
+        component: Permisos
       }
     ]
   },

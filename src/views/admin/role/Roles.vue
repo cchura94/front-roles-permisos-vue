@@ -62,9 +62,18 @@
           ></Badge>
         </template>
       </Column>
+      <Column field="accion" header="ACCIONES">
+        <template #body="slotProps">
+          <Button
+            icon="pi pi-external-link"
+            @click="redireccionar(slotProps.data.id)"
+          />
+        </template>
+      </Column>
       <!--Column field="quantity" header="Quantity"></Column-->
     </DataTable>
   </div>
+
 </template>
 
 <script>
@@ -72,6 +81,11 @@ import { ref, onMounted } from "vue";
 import RoleService from "@/service/RoleService";
 
 export default {
+  methods: {
+    redireccionar(id){
+      this.$router.push('/admin/roles/'+id+'/permisos')
+    }
+  },
   setup() {
     onMounted(async () => {
       listarRoles()

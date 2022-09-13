@@ -8,6 +8,14 @@ export default {
 
     guardarRole(datos){
         return http().post("/v1/role", datos)
+    },
+
+    mostrarRole(id){
+        return http().get("/v1/role/"+id)
+    },
+
+    asignarPermisos(permisos){
+        return http().post("/v1/role/asignar-permiso", permisos)
     }
 
 }
