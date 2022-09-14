@@ -1,6 +1,7 @@
 <template>
     <div class="card" v-if="role">
         <h1>Rol: {{ role.nombre }}</h1>
+        {{ role.permisos }}
 
         <p>{{ permisos }}</p>
 
@@ -32,6 +33,15 @@ export default {
         this.role = data
         const per = await PermisoService.getPermisos()
         this.lista_permisos = per.data.data
+
+        for (let i = 0; i < this.lista_permisos.length; i++) {
+            const perm = this.lista_permisos[i];
+            if(this.verifica(perm)){
+                this.permisos.push(perm.id)
+            }
+        }
+
+
     },
     methods: {
         async actualizarPermisos(){
@@ -40,6 +50,19 @@ export default {
                 permisos: this.permisos
             }
             await RoleService.asignarPermisos(datos)
+        },
+        verifica(perm){
+            let cont = 0;
+            for (let j = 0; j < this.role.permisos.length; j++) {
+                const p = this.role.permisos[j];
+                if(p.action == perm.action && p.subject == perm.subject){
+                    cont++;
+                }                
+            }
+            if(cont>0){
+                return true
+            }
+            return false
         }
     }
 

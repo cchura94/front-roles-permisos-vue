@@ -54,6 +54,7 @@ import * as authService from "@/service/AuthService.js"
 import {ref} from "vue"
 import { useRouter } from 'vue-router'
 import ability from "@/acl/ability"
+import { Buffer } from 'buffer';
 
 export default {
     setup(){
@@ -69,26 +70,23 @@ export default {
                 console.log(data);
                 localStorage.setItem("token", data.accessToken);
 
-                if(data.usuario.roles.length > 0){
-                    data.ability = data.usuario.roles[0].permisos                    
+                /*if(data.usuario.roles.length > 0){
+                    data.ability = data.usuario.roles[0].permisos                
                 }else{
                     data.ability = []
-                }
-                data.ability.push({
+                }*/
+                data.usuario.ability.push({
                     action: 'read',
                     subject: 'Auth'
                 })
 
-                localStorage.setItem('userData', JSON.stringify(data))
+                let base64 = Buffer.from(JSON.stringify(data)).toString('base64')
 
-                console.log("*******: ", data);
+                localStorage.setItem('userData', base64)
 
-                ability.update(data.ability)
-
-                
+                ability.update(data.usuario.ability)
                 router.push({name: 'Perfil'})
 
-                
             } catch (error) {
                 console.log("**********", error);
                 if(error.response.status === 422) {
