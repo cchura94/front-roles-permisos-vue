@@ -212,6 +212,7 @@
             label="Editar"
             icon="pi pi-external-link"
             @click="openModalEditar(slotProps.data)"
+            v-if="can('update', 'user')"
           />
         </template>
       </Column>

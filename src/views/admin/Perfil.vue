@@ -1,5 +1,5 @@
 <template>
-    <div class="card" v-if="ability.can('view', 'user')">
+    <div class="card" v-if="ability.can('viewAny', 'user')">
         <h1>PERFIL</h1>
 
          <Card style="width: 25em">

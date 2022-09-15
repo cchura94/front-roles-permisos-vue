@@ -50,6 +50,13 @@ export default {
                         {label: "Usuarios", icon: "pi pi-fw pi-bookmark", to: "/admin/usuario", action: 'viewAny', resource: 'user'},
 					]
 				},
+                {
+					label: 'Gestión Almacen', icon: 'pi pi-fw pi-sitemap',
+					items: [
+						{label: 'Producto', icon: 'pi pi-fw pi-check-square', to: '/admin/roles', action: 'viewAny', resource: 'producto'},
+                        {label: "Categoria", icon: "pi pi-fw pi-bookmark", to: "/admin/usuario", action: 'viewAny', resource: 'categoria'},
+					]
+				},
             ]
         }
     },

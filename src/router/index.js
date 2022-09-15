@@ -14,7 +14,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/admin'
+    redirect: '/admin/perfil'
     //component: HomeView
   },
   {
@@ -76,8 +76,21 @@ const routes = [
       {
         path: 'roles/:id/permisos',
         name: 'RolPermisos',
-        component: Permisos
-      }
+        component: Permisos,
+        meta: {
+          action: 'viewAny',
+          resource: 'permiso'
+        }
+      },
+      /*{
+        path: 'productos',
+        name: 'Producto',
+        component: Productos,
+        meta: {
+          action: 'viewAny',
+          resource: 'producto'
+        }
+      }*/
     ]
   },
   
@@ -112,7 +125,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if(to.meta.redirectIfAuth && token){
-    next({name: 'Usuario'});
+    next({name: 'Perfil'});
   }
   return next();
 
